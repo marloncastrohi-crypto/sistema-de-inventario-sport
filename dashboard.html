@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SportStock</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="css/dashboard.css" rel="stylesheet">
+    <link href="css/mediaquerys.css" rel="stylesheet">
+</head>   
+   
+<body>
+    <div class="grid-pattern"></div>
+    <div class="container">
+        <!-- HEADER -->
+        <header class="header">
+            <img class="logo" src="img/Logo deportivo.png" alt="Logo"/>
+            <div class="header-right">
+                <div class="user-info">
+                    <span class="user-role-badge" id="user-role" title="" aria-label="Rol de usuario"></span>
+                    <button class="btn btn-secondary btn-small" onclick="logout()">Cerrar Sesión</button>
+                </div>
+                <button class="hamburger" onclick="toggleMenu()">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+        </header>
+
+        <div class="mobile-menu" id="mobile-menu">
+            <button class="close-menu" onclick="toggleMenu()">&times;</button>
+            <a href="#" onclick="showView('dashboard'); toggleMenu();">Dashboard</a>
+            <a href="#" onclick="showView('inventory'); toggleMenu();">Inventario</a>
+            <a href="#" onclick="showView('tickets'); toggleMenu();">Tickets</a>
+            <a href="#" onclick="showView('reports'); toggleMenu();">Reportes</a>
+        </div>
+
+        <!-- VISTA: DASHBOARD -->
+        <div id="dashboard-view" class="view active">
+            <h1 class="section-title">Dashboard</h1>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Artículos</h3>
+                    <div class="stat-value" id="total-items">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Disponibles</h3>
+                    <div class="stat-value" id="available-items">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Tickets Abiertos</h3>
+                    <div class="stat-value" id="open-tickets">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Tickets</h3>
+                    <div class="stat-value" id="total-tickets">0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VISTA: INVENTARIO -->
+        <div id="inventory-view" class="view">
+            <h1 class="section-title">Gestión de Inventario</h1>
+            
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2 style="font-family: 'Rajdhani', sans-serif; font-size: 1.5rem; color: var(--text-light);">Artículos</h2>
+                    <button class="btn btn-primary" onclick="openInventoryModal()">+ Nuevo Artículo</button>
+                </div>
+                
+                <div style="overflow-x: auto;">
+                    <table id="inventory-table">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Nombre</th>
+                                <th>Categoría</th>
+                                <th>Cantidad</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventory-tbody">
+                            <!-- Datos dinámicos -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- VISTA: TICKETS -->
+        <div id="tickets-view" class="view">
+            <h1 class="section-title">Sistema de Tickets</h1>
+            
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2 style="font-family: 'Rajdhani', sans-serif; font-size: 1.5rem; color: var(--text-light);">Tickets</h2>
+                    <button class="btn btn-primary" onclick="openTicketModal()">+ Nuevo Ticket</button>
+                </div>
+                
+                <div style="overflow-x: auto;">
+                    <table id="tickets-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Título</th>
+                                <th>Solicitante</th>
+                                <th>Estado</th>
+                                <th>Fecha</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tickets-tbody">
+                            <!-- Datos dinámicos -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- VISTA: REPORTES -->
+        <div id="reports-view" class="view">
+            <h1 class="section-title">Reportes y Estadísticas</h1>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Préstamos del Mes</h3>
+                    <div class="stat-value">24</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Tickets Resueltos</h3>
+                    <div class="stat-value">18</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Artículos Más Solicitados</h3>
+                    <div class="stat-value">Balones</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Tasa de Resolución</h3>
+                    <div class="stat-value">87%</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 style="font-family: 'Rajdhani', sans-serif; font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-light);">Actividad Reciente</h2>
+                <p style="color: var(--text-muted);">Los reportes detallados estarán disponibles próximamente.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL INVENTARIO -->
+    <div id="inventory-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="inventory-modal-title">Nuevo Artículo</h2>
+                <button class="close-modal" onclick="closeInventoryModal()">&times;</button>
+            </div>
+            
+            <form id="inventory-form">
+                <input type="hidden" id="item-id">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Código</label>
+                        <input type="text" id="item-code" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" id="item-name" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Categoría</label>
+                        <select id="item-category" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="Fútbol">Fútbol</option>
+                            <option value="Basketball">Basketball</option>
+                            <option value="Voleibol">Voleibol</option>
+                            <option value="Tenis">Tenis</option>
+                            <option value="Otros">Otros</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Cantidad</label>
+                        <input type="number" id="item-quantity" min="0" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea id="item-description" rows="3"></textarea>
+                </div>
+                
+                <div class="actions">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeInventoryModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL TICKETS -->
+    <div id="ticket-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="ticket-modal-title">Nuevo Ticket</h2>
+                <button class="close-modal" onclick="closeTicketModal()">&times;</button>
+            </div>
+            
+            <form id="ticket-form">
+                <input type="hidden" id="ticket-id">
+                
+                <div class="form-group">
+                    <label>Título</label>
+                    <input type="text" id="ticket-title" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Solicitante</label>
+                        <input type="text" id="ticket-requester" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Estado</label>
+                        <select id="ticket-status" required>
+                            <option value="Abierto">Abierto</option>
+                            <option value="En Proceso">En Proceso</option>
+                            <option value="Cerrado">Cerrado</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea id="ticket-description" rows="4" required></textarea>
+                </div>
+                
+                <div class="actions">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeTicketModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+
+    <script src="app.js"></script>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('mobile-menu').classList.toggle('active');
+        }
+    </script>
+
+    <footer class="footer">
+        <p>&copy; 2026 Estiven Castro. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>

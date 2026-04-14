@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportStock - Sistema de Inventario Deportivo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+    <link href="css/mediaquerys.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <img class="logo" src="img/Logo deportivo.png" alt="Logo"/>
+        </header>
+
+        <section class="hero">
+            <h1>Sistema de Inventario Deportivo</h1>
+            <p>Gestiona tu inventario y tickets de manera eficiente</p>
+            <div class="cta-buttons">
+                <a href="#login" class="btn btn-primary" onclick="showLogin()">Iniciar Sesión</a>
+                <a href="#" class="btn btn-secondary" onclick="showFeatures(event)">Conocer Más</a>
+            </div>
+        </section>
+
+        <section class="features" id="features" style="display: none;">
+            <div class="feature-card">
+                <div class="feature-icon">📦</div>
+                <h3>Gestión de Inventario</h3>
+                <p>Administra todos tus artículos deportivos de forma centralizada. Control de stock, categorías y disponibilidad en tiempo real.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎫</div>
+                <h3>Sistema de Tickets</h3>
+                <p>Crea, edita y da seguimiento a solicitudes y tickets. CRUD completo con estados y reportes detallados.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Reportes y Estadísticas</h3>
+                <p>Visualiza métricas importantes, préstamos activos y estadísticas del inventario en tiempo real.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Acceso Seguro</h3>
+                <p>Sistema de autenticación robusto con validación de usuarios y protección de datos.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Diseño Responsive</h3>
+                <p>Interfaz adaptable a cualquier dispositivo. Accede desde computadora, tablet o móvil.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Rápido y Eficiente</h3>
+                <p>Diseñado para optimizar tus operaciones diarias con una interfaz intuitiva y moderna.</p>
+            </div>
+        </section>
+
+        <section class="auth-section" id="login" style="display: none;">
+            <div class="auth-card">
+                <h2>Iniciar Sesión</h2>
+                <p style="color: var(--text-muted); margin-bottom: 2rem;">Accede al sistema de gestión</p>
+                
+                <form id="login-form">
+                    <div class="form-group">
+                        <label>Usuario</label>
+                        <input type="text" id="username" required>
+                        <div class="error-message" id="username-error"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Contraseña</label>
+                        <input type="password" id="password" required>
+                        <div class="error-message" id="password-error"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                            Ingresar al Sistema
+                        </button>
+                    </div>
+                    
+                    <div class="text-center">
+                        <a href="#" class="link" onclick="showRecovery()">¿Olvidaste tu contraseña?</a>
+                    </div>
+                    
+                    <div class="text-center" style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255, 107, 53, 0.2);">
+                        <span style="color: var(--text-muted);">¿No tienes cuenta?</span>
+                        <a href="#" class="link" onclick="showRegister()">Regístrate aquí</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE REGISTRO -->
+        <section class="auth-section" id="register" style="display: none;">
+            <div class="auth-card">
+                <h2>Crear Cuenta</h2>
+                <p style="color: var(--text-muted); margin-bottom: 2rem;">Regístrate en el sistema</p>
+                
+                <form id="register-form">
+                    <div class="form-group">
+                        <label>Nombre Completo</label>
+                        <input type="text" id="reg-name" required placeholder="Juan Pérez">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="reg-email" required placeholder="tu@email.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Usuario</label>
+                        <input type="text" id="reg-username" required placeholder="usuario">
+                        <div class="error-message" id="reg-username-error"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Contraseña</label>
+                        <input type="password" id="reg-password" required placeholder="Mínimo 6 caracteres">
+                        <div class="error-message" id="reg-password-error"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Confirmar Contraseña</label>
+                        <input type="password" id="reg-confirm-password" required>
+                        <div class="error-message" id="reg-confirm-error"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                            Crear Cuenta
+                        </button>
+                    </div>
+                    
+                    <div class="text-center">
+                        <span style="color: var(--text-muted);">¿Ya tienes cuenta?</span>
+                        <a href="#" class="link" onclick="showLogin()">Inicia sesión aquí</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE RECUPERACIÓN -->
+        <section class="auth-section" id="recovery" style="display: none;">
+            <div class="auth-card">
+                <h2>Recuperar Contraseña</h2>
+                <p style="color: var(--text-muted); margin-bottom: 2rem;">Ingresa tu email para restablecer tu contraseña</p>
+                
+                <form id="recovery-form">
+                    <div class="form-group">
+                        <label>Email Registrado</label>
+                        <input type="email" id="recovery-email" required placeholder="tu@email.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-secondary" style="width: 100%;">
+                            Enviar Enlace de Recuperación
+                        </button>
+                    </div>
+                    
+                    <div class="text-center">
+                        <a href="#" class="link" onclick="showLogin()">Volver al inicio de sesión</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
