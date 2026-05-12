@@ -11,12 +11,13 @@
         align-items: center;
         gap: 0.75rem;
         padding: 0.8rem 1rem;
+        margin-top: 0.25rem;
     }
 
     .logo {
         width: auto;
-        max-width: 220px;
-        max-height: 4.4rem;
+        max-width: 250px;
+        max-height: 6.8rem;
     }
     
     .hero {
@@ -52,12 +53,13 @@
     }
 
     .auth-section {
-        margin-top: 2rem;
+        margin-top: 0.75rem;
         padding: 0 0.5rem;
     }
 
     .auth-card {
         padding: 2rem;
+        margin-bottom: 0.75rem;
     }
 
     input,
@@ -88,8 +90,8 @@
     .logo {
         width: auto;
         height: auto;
-        max-width: 180px;
-        max-height: 3.6rem;
+        max-width: 250px;
+        max-height: 6.8rem;
     }
 
     .user-info {
@@ -139,7 +141,7 @@
     }
 
     .container {
-        padding-bottom: 2rem;
+        padding-bottom: 0.75rem;
     }
 
     .footer {

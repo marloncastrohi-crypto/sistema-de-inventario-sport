@@ -11,6 +11,7 @@ SportStock es una solución integral desarrollada en HTML, CSS y JavaScript que 
 ### 🔐 Sistema de Autenticación y Roles
 - Inicio de sesión con validación de credenciales
 - Registro de nuevos usuarios
+- Auto-login después del registro
 - Recuperación de contraseña
 - Gestión de sesiones con LocalStorage
 - **Sistema de roles: Admin y Usuario**
@@ -28,6 +29,7 @@ Campos del inventario:
 - Código único
 - Nombre del artículo
 - Categoría (Fútbol, Basketball, Voleibol, Tenis, Otros)
+- Precio (COP)
 - Cantidad disponible
 - Descripción
 
@@ -42,6 +44,12 @@ Estados de tickets:
 - 🔵 Abierto
 - 🟡 En Proceso
 - ⚪ Cerrado
+
+### 🛒 Carrito de Implementos
+- Agregar artículos con control de stock
+- Ajustar cantidades y eliminar artículos
+- Subtotales por ítem y total general
+- Generación de ticket con detalle, total y solicitante del usuario
 
 ### 📊 Dashboard y Reportes
 - Estadísticas en tiempo real
@@ -82,6 +90,7 @@ sportstock/
 ├── index.html              # Página de inicio y login
 ├── dashboard.html          # Panel principal del sistema
 ├── app.js                  # Lógica JavaScript (CRUD + Roles)
+├── backend/                # API Java 23 (Spring Boot MVC)
 ├── INSTALACION_LINUX.md    # Guía de despliegue en Linux
 └── README.md               # Este archivo
 ```
@@ -98,6 +107,37 @@ sportstock/
 ### Opción 2: Despliegue en Linux
 Ver archivo `INSTALACION_LINUX.md` para instrucciones detalladas.
 
+## ⚙️ Backend Spring Boot (Java 23)
+
+### Requisitos
+- Java 23
+- Maven 3.9+
+- MySQL 8+
+
+### Configuración
+1. Edita [backend/src/main/resources/application.yml](backend/src/main/resources/application.yml):
+  - `spring.datasource.username`
+  - `spring.datasource.password`
+
+### Ejecutar API
+```bash
+cd backend
+mvn spring-boot:run
+```
+
+### Endpoints principales
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+- `GET /api/inventory`
+- `POST /api/inventory` (admin)
+- `PUT /api/inventory/{id}` (admin)
+- `DELETE /api/inventory/{id}` (admin)
+- `GET /api/tickets`
+- `POST /api/tickets` (admin)
+- `PUT /api/tickets/{id}` (admin)
+- `DELETE /api/tickets/{id}` (admin)
+- `POST /api/cart/checkout`
+
 ## 💻 Tecnologías Utilizadas
 
 | Tecnología | Uso |
@@ -106,6 +146,9 @@ Ver archivo `INSTALACION_LINUX.md` para instrucciones detalladas.
 | CSS3 | Estilos y diseño responsive |
 | JavaScript (ES6+) | Lógica de negocio y CRUD |
 | LocalStorage | Persistencia de datos (frontend) |
+| Boxicons | Iconografía profesional |
+| Java 23 | Backend API |
+| Spring Boot MVC | Controladores y seguridad |
 | MySQL | Base de datos (opcional, backend) |
 | Apache2 | Servidor web (despliegue Linux) |
 
@@ -133,6 +176,12 @@ Ver archivo `INSTALACION_LINUX.md` para instrucciones detalladas.
 1. Ir a pestaña "Reportes"
 2. Visualizar estadísticas
 3. Analizar métricas del sistema
+
+### 5. Usar el Carrito
+1. Ir a "Inventario" y agregar artículos al carrito
+2. Ajustar cantidades en "Carrito"
+3. Ver subtotales y total general
+4. Confirmar préstamo para generar ticket
 
 ## 🔑 Sistema de Roles
 
@@ -184,6 +233,7 @@ El badge de rol del usuario es visible en el encabezado del dashboard:
 - code (VARCHAR, UNIQUE)
 - name (VARCHAR)
 - category (VARCHAR)
+- price (DECIMAL)
 - quantity (INT)
 - description (TEXT)
 - created_at (TIMESTAMP)
@@ -217,6 +267,28 @@ Ver script SQL completo en `INSTALACION_LINUX.md`
 - **Mobile**: < 768px
 
 ## 🐛 Problemas Conocidos
+
+## ✅ Plan para versión profesional (backend + seguridad + QA)
+
+### Fase 1: Backend mínimo viable
+- API REST para usuarios, inventario, tickets y carrito
+- Persistencia real en MySQL/PostgreSQL
+- Autenticación con JWT y roles
+
+### Fase 2: Seguridad y validación
+- Hash de contraseñas (bcrypt/argon2)
+- Validación y sanitización en servidor
+- Protección CSRF, rate limiting y políticas CORS
+
+### Fase 3: Reportes reales
+- Reportes filtrables por fecha y estado
+- Exportación a PDF/Excel
+- Gráficos con métricas reales
+
+### Fase 4: Calidad y despliegue
+- Pruebas unitarias e интегración (inventario, tickets, carrito)
+- Logs y monitoreo básicos
+- Variables de entorno y pipeline de despliegue
 
 1. LocalStorage tiene límite de 5MB
 2. Sin sincronización entre pestañas

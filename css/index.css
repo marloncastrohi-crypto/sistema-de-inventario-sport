@@ -1,297 +1,319 @@
- * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+/* =====================================================
+   SPORTSTOCK - HOJA DE ESTILOS PARA INDEX.HTML
+   =====================================================
+   Esta hoja define los estilos para la página principal
+   (landing page) del sistema de inventario deportivo.
+   ===================================================== */
 
-        :root {
-            --primary: #FF6B35;
-            --primary-dark: #E85A2A;
-            --secondary: #004E89;
-            --accent: #00D9FF;
-            --bg-dark: #0A1128;
-            --text-light: #F0F4F8;
-            --text-muted: #8B95A5;
-            --success: #00E676;
-            --error: #FF3D3D;
-        }
+/* RESETEO Y VARIABLES GLOBALES */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Modelo de caja consistente */
+}
 
-        body {
-            font-family: 'Outfit', sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-light);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+/* Variables CSS para colores y tipografía */
+:root {
+    --primary: #FF6B35;        /* Naranja principal */
+    --primary-dark: #E85A2A;   /* Naranja oscuro para hover */
+    --secondary: #004E89;      /* Azul secundario */
+    --accent: #00D9FF;         /* Cian para acentos */
+    --bg-dark: #0A1128;        /* Fondo oscuro principal */
+    --text-light: #F0F4F8;     /* Texto claro */
+    --text-muted: #8B95A5;     /* Texto atenuado */
+    --success: #00E676;        /* Verde para éxito */
+    --error: #FF3D3D;          /* Rojo para errores */
+}
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(255, 107, 53, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(0, 217, 255, 0.1) 0%, transparent 50%);
-            z-index: 0;
-            pointer-events: none;
-        }
+/* ESTILOS GENERALES DEL BODY */
+body {
+    font-family: 'Outfit', sans-serif; /* Fuente principal */
+    background: var(--bg-dark);
+    color: var(--text-light);
+    min-height: 100vh;
+    overflow-x: hidden; /* Evita scroll horizontal */
+}
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-            position: relative;
-            z-index: 1;
-        }
+/* Fondo con gradientes decorativos */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(255, 107, 53, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(0, 217, 255, 0.1) 0%, transparent 50%);
+    z-index: 0;
+    pointer-events: none; /* No interfiere con clics */
+}
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 2rem;
-            background: rgba(26, 31, 58, 0.6);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 107, 53, 0.2);
-            margin-bottom: 3rem;
-        }
+/* CONTENEDOR PRINCIPAL */
+.container {
+    max-width: 1400vh;
+    margin:0 auto;
+    padding: 2rem;
+    position: relative;
+    z-index: 1; /* Sobre el fondo decorativo */
+}
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            height: auto;
-            max-width: 150px;
-        }
+/* Encabezado con logo */
+.header {
+    margin-top: -3rem;
+}
 
-        .hero {
-            text-align: center;
-            padding: 4rem 2rem;
-        }
 
-        .hero h1 {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 4rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+/* Logo en el header */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    height: auto;
+    max-width: 300px; /* Aumentado de 150px a 250px para hacer el logo más grande */
 
-        .hero p {
-            font-size: 1.5rem;
-            color: var(--text-muted);
-            margin-bottom: 3rem;
-        }
+}
 
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
+/* SECCIÓN HERO */
+.hero {
+    text-align: center;
+    padding: 4rem 2rem;
+}
 
-        .btn {
-            padding: 1rem 2.5rem;
-            border: none;
-            border-radius: 12px;
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
+.hero h1 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text; /* Texto con gradiente */
+}
 
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
-        }
+.hero p {
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    margin-bottom: 3rem;
+}
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.6);
-        }
+/* BOTONES DE LLAMADA A ACCIÓN */
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap; /* Se adapta en móviles */
+}
 
-        .btn-secondary {
-            background: transparent;
-            color: var(--accent);
-            border: 2px solid var(--accent);
-        }
+/* Estilos base para botones */
+.btn {
+    padding: 1rem 2.5rem;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
 
-        .btn-secondary:hover {
-            background: var(--secondary);
-        }
+/* Botón primario */
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+}
 
-        .features-section {
-            background: rgba(10, 17, 40, 0.9);
-            border-radius: 32px;
-            padding: 3rem 2rem 2.5rem;
-            border: 1px solid rgba(255, 107, 53, 0.15);
-            margin-top: 4rem;
-        }
+.btn-primary:hover {
+    transform: translateY(-2px); /* Efecto de elevación */
+    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.6);
+}
 
-        .features-section .section-heading {
-            text-align: center;
-            margin-bottom: 2rem;
-            max-width: 780px;
-            margin-left: auto;
-            margin-right: auto;
-        }
+/* Botón secundario */
+.btn-secondary {
+    background: transparent;
+    color: var(--accent);
+    border: 2px solid var(--accent);
+}
 
-        .features-section .section-heading h2 {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 2.8rem;
-            margin-bottom: 0.75rem;
-            color: var(--primary);
-        }
+.btn-secondary:hover {
+    background: var(--secondary);
+}
 
-        .features-section .section-heading p {
-            color: var(--text-muted);
-            font-size: 1rem;
-            line-height: 1.7;
-        }
+/* SECCIÓN DE CARACTERÍSTICAS */
+.features-section {
+    background: rgba(10, 17, 40, 0.9);
+    border-radius: 32px;
+    padding: 3rem 2rem 2.5rem;
+    border: 1px solid rgba(255, 107, 53, 0.15);
+    margin-top: 4rem;
+}
 
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 1rem;
-        }
+.features-section .section-heading {
+    text-align: center;
+    margin-bottom: 2rem;
+    max-width: 780px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
-        .feature-card {
-            background: rgba(26, 31, 58, 0.8);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 2rem;
-            border: 1px solid rgba(255, 107, 53, 0.2);
-            transition: all 0.3s ease;
-            min-height: 235px;
-        }
+.features-section .section-heading h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 2.8rem;
+    margin-bottom: 0.75rem;
+    color: var(--primary);
+}
 
-        .feature-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-        }
+.features-section .section-heading p {
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.7;
+}
 
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
+/* Grid de características */
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 1rem;
+}
 
-        .feature-card h3 {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
+/* Tarjetas de características */
+.feature-card {
+    background: rgba(26, 31, 58, 0.8);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 2rem;
+    border: 1px solid rgba(255, 107, 53, 0.2);
+    transition: all 0.3s ease;
+    min-height: 235px; /* Altura mínima consistente */
+}
 
-        .feature-card p {
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
+.feature-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+}
 
-        .auth-section {
-            display: flex;
-            justify-content: center;
-            margin-top: 4rem;
-        }
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
 
-        .auth-card {
-            background: rgba(26, 31, 58, 0.8);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
-            padding: 3rem;
-            border: 1px solid rgba(255, 107, 53, 0.3);
-            max-width: 500px;
-            width: 100%;
-        }
+.feature-card h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary);
+}
 
-        .auth-card h2 {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+.feature-card p {
+    color: var(--text-muted);
+    line-height: 1.6;
+}
 
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
+/* SECCIÓN DE AUTENTICACIÓN */
+.auth-section {
+    display: flex;
+    justify-content: center;
+    margin-top: -1rem;
+}
 
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-light);
-            font-weight: 500;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-        }
+.auth-card {
+    background: rgba(26, 31, 58, 0.8);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 2.8rem;
+    border: 1px solid rgba(255, 107, 53, 0.3);
+    max-width: 500px;
+    width: 100%;
+}
 
-        input {
-            width: 100%;
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.3);
-            border: 2px solid rgba(255, 107, 53, 0.2);
-            border-radius: 12px;
-            color: var(--text-light);
-            font-family: 'Outfit', sans-serif;
-            font-size: 1rem;
-        }
+.auth-card h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 
-        input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 20px rgba(255, 107, 53, 0.2);
-        }
+/* FORMULARIOS */
+.form-group {
+    margin-bottom: 1.5rem;
+}
 
-        .error-message {
-            color: var(--error);
-            font-size: 0.85rem;
-            margin-top: 0.5rem;
-            display: none;
-        }
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-light);
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
 
-        .error-message.show {
-            display: block;
-        }
+input {
+    width: 100%;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 107, 53, 0.2);
+    border-radius: 12px;
+    color: var(--text-light);
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+}
 
-        .link {
-            color: var(--accent);
-            text-decoration: none;
-            cursor: pointer;
-        }
+input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 20px rgba(255, 107, 53, 0.2);
+}
 
-        .link:hover {
-            text-decoration: underline;
-        }
+/* Mensajes de error */
+.error-message {
+    color: var(--error);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    display: none;
+}
 
-        .text-center {
-            text-align: center;
-            margin-top: 1rem;
-        }
+.error-message.show {
+    display: block;
+}
 
-        .credentials-box {
-            background: transparent;
-            border: none;
-            border-radius: 0;
-            padding: 0;
-            margin-bottom: 1.5rem;
-        }
+/* Enlaces */
+.link {
+    color: var(--accent);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+/* Texto centrado */
+.text-center {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+/* Contenedor especial para credenciales */
+.credentials-box {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    margin-bottom: 1.5rem;
+}
 
         

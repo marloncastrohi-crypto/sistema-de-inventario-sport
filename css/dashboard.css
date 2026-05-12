@@ -1,102 +1,120 @@
- * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+/* =====================================================
+   SPORTSTOCK - HOJA DE ESTILOS PARA DASHBOARD.HTML
+   =====================================================
+   Esta hoja define los estilos para el panel de control
+   del sistema de inventario deportivo, incluyendo
+   navegación, tablas, modales y diseño responsive.
+   ===================================================== */
 
-        :root {
-            --primary: #FF6B35;
-            --primary-dark: #E85A2A;
-            --secondary: #004E89;
-            --accent: #00D9FF;
-            --bg-dark: #0A1128;
-            --text-light: #F0F4F8;
-            --text-muted: #8B95A5;
-            --success: #00E676;
-            --warning: #FFD600;
-            --error: #FF3D3D;
-        }
+/* RESETEO Y VARIABLES GLOBALES */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Modelo de caja consistente */
+}
 
-        body {
-            font-family: 'Outfit', sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-light);
-            min-height: 100vh;
-        }
+/* Variables CSS para colores y tipografía */
+:root {
+    --primary: #FF6B35;        /* Naranja principal */
+    --primary-dark: #E85A2A;   /* Naranja oscuro para hover */
+    --secondary: #004E89;      /* Azul secundario */
+    --accent: #00D9FF;         /* Cian para acentos */
+    --bg-dark: #0A1128;        /* Fondo oscuro principal */
+    --text-light: #F0F4F8;     /* Texto claro */
+    --text-muted: #8B95A5;     /* Texto atenuado */
+    --success: #00E676;        /* Verde para éxito */
+    --warning: #FFD600;        /* Amarillo para advertencias */
+    --error: #FF3D3D;          /* Rojo para errores */
+}
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(255, 107, 53, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(0, 217, 255, 0.1) 0%, transparent 50%);
-            z-index: 0;
-            pointer-events: none;
-        }
+/* ESTILOS GENERALES DEL BODY */
+body {
+    font-family: 'Outfit', sans-serif; /* Fuente principal */
+    background: var(--bg-dark);
+    color: var(--text-light);
+    min-height: 100vh;
+}
 
-        .grid-pattern {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(255, 107, 53, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 107, 53, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: 0;
-            pointer-events: none;
-            opacity: 0.5;
-        }
+/* Fondo con gradientes decorativos */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(255, 107, 53, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(0, 217, 255, 0.1) 0%, transparent 50%);
+    z-index: 0;
+    pointer-events: none; /* No interfiere con clics */
+}
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-            position: relative;
-            z-index: 1;
-        }
+/* Patrón de grid decorativo */
+.grid-pattern {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-height: 100%;
+    background-image: 
+        linear-gradient(rgba(255, 107, 53, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 107, 53, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px; /* Tamaño del patrón */
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.5; /* Transparencia sutil */
+}
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 2rem;
-            background: rgba(26, 31, 58, 0.6);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 107, 53, 0.2);
-            margin-bottom: 2rem;
-        }
+/* CONTENEDOR PRINCIPAL */
+.container {
+    max-width: 1400vh;
+    margin: 0 auto;
+    padding: 2rem;
+    position: relative;
+    z-index: 1; /* Sobre el fondo */
+}
 
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
+/* HEADER DEL DASHBOARD */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    background: rgba(26, 31, 58, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 107, 53, 0.2);
+    margin-bottom: 2rem;
+}
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-transform: uppercase;
-            width: 20vw;
-            height: 20vh;
-        }
+/* Contenedor derecho del header */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
 
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
+/* Logo en el dashboard */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    width: 20vw; /* Ancho relativo para responsividad */
+    height: 20vh; /* Alto relativo */
+}
+
+/* Información del usuario */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
 
         .user-name {
             color: var(--text-light);
@@ -293,6 +311,13 @@
             margin-bottom: 1.5rem;
         }
 
+        .form-hint {
+            margin-top: -0.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
         label {
             display: block;
             margin-bottom: 0.5rem;
@@ -452,6 +477,47 @@
     border: 1px solid rgba(255, 107, 53, 0.2);
 }
 
+/* IMAGENES EN TABLAS */
+.item-image-cell {
+    width: 64px;
+}
+
+.item-image,
+.cart-item-image {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.cart-item-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+}
+
+.ticket-images {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+}
+
+.ticket-item-image {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.text-muted {
+    color: var(--text-muted);
+}
+
         .hamburger {
             display: flex;
             flex-direction: column;
@@ -536,3 +602,146 @@
             color: var(--accent);
         
 }
+
+/* =========================================
+   ESTILOS ADICIONALES: MENÚ Y CARRITO 
+   ========================================= */
+
+.mobile-menu {
+    justify-content: flex-start;
+}
+
+.menu-header {
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 107, 53, 0.2);
+}
+
+.menu-header h3 {
+    font-family: 'Rajdhani', sans-serif;
+    color: var(--primary);
+    font-size: 1.5rem;
+    text-transform: uppercase;
+}
+
+.menu-footer {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 107, 53, 0.2);
+}
+
+.logout-menu-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: rgba(255, 61, 61, 0.1);
+    color: var(--error);
+    border-color: rgba(255, 61, 61, 0.3);
+}
+
+.logout-menu-btn:hover {
+    background: rgba(255, 61, 61, 0.2);
+}
+
+.mobile-menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.menu-icon {
+    font-size: 1.4rem;
+    width: 25px;
+    text-align: center;
+    display: inline-block;
+}
+
+.menu-icon i {
+    vertical-align: middle;
+}
+
+.cart-badge {
+    background-color: var(--primary);
+    color: white;
+    border-radius: 50%;
+    padding: 0.1rem 0.5rem;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-left: auto;
+}
+
+.cart-summary {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: var(--text-light);
+}
+
+.cart-summary strong {
+    font-size: 1.1rem;
+    color: var(--primary);
+}
+
+.btn-cart {
+    background-color: var(--primary-dark);
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: none;
+    border-radius: 8px;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.btn-cart:hover {
+    background-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.btn-cart:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+    transform: none;
+    opacity: 0.6;
+}
+
+.cart-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cart-qty-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    width: 25px;
+    height: 25px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.cart-qty-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.remove-cart-btn {
+    color: var(--error);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+

@@ -1,25 +1,42 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- Configuración básica del documento HTML para el dashboard -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - SportStock</title>
+    <!-- Favicon -->
+    <link rel="icon" href="img/Logo deportivo.png" type="image/png">
+
+    <!-- Fuentes de Google para mantener consistencia visual -->
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link href="css/dashboard.css" rel="stylesheet">
-    <link href="css/mediaquerys.css" rel="stylesheet">
-</head>   
-   
+    
+    <!-- Iconos profesionales Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- Hojas de estilo específicas del dashboard -->
+    <link href="css/dashboard.css" rel="stylesheet"> <!-- Estilos principales del dashboard -->
+    <link href="css/mediaquerys.css" rel="stylesheet"> <!-- Estilos responsivos -->
+</head>
+
 <body>
+    <!-- Patrón de fondo decorativo -->
     <div class="grid-pattern"></div>
+
+    <!-- Contenedor principal del dashboard -->
     <div class="container">
-        <!-- HEADER -->
+        <!-- HEADER PRINCIPAL -->
         <header class="header">
+            <!-- Logo del sistema -->
             <img class="logo" src="img/Logo deportivo.png" alt="Logo"/>
+
+            <!-- Información del usuario y controles -->
             <div class="header-right">
                 <div class="user-info">
+                    <!-- Indicador de rol del usuario (admin/usuario) -->
                     <span class="user-role-badge" id="user-role" title="" aria-label="Rol de usuario"></span>
-                    <button class="btn btn-secondary btn-small" onclick="logout()">Cerrar Sesión</button>
                 </div>
+                <!-- Botón hamburguesa para menú móvil -->
                 <button class="hamburger" onclick="toggleMenu()">
                     <span class="hamburger-line"></span>
                     <span class="hamburger-line"></span>
@@ -28,31 +45,57 @@
             </div>
         </header>
 
+        <!-- MENÚ LATERAL (Móvil y Escritorio) -->
         <div class="mobile-menu" id="mobile-menu">
             <button class="close-menu" onclick="toggleMenu()">&times;</button>
-            <a href="#" onclick="showView('dashboard'); toggleMenu();">Dashboard</a>
-            <a href="#" onclick="showView('inventory'); toggleMenu();">Inventario</a>
-            <a href="#" onclick="showView('tickets'); toggleMenu();">Tickets</a>
-            <a href="#" onclick="showView('reports'); toggleMenu();">Reportes</a>
+            <div class="menu-header">
+                <h3>Menú</h3>
+            </div>
+            <!-- Enlaces de navegación -->
+            <a href="#" onclick="showView('dashboard'); toggleMenu();">
+                <span class="menu-icon"><i class='bx bx-grid-alt'></i></span> Dashboard
+            </a>
+            <a href="#" onclick="showView('inventory'); toggleMenu();">
+                <span class="menu-icon"><i class='bx bx-box'></i></span> Inventario
+            </a>
+            <a href="#" onclick="showView('tickets'); toggleMenu();">
+                <span class="menu-icon"><i class='bx bx-receipt'></i></span> Tickets
+            </a>
+            <a href="#" onclick="showView('reports'); toggleMenu();">
+                <span class="menu-icon"><i class='bx bx-bar-chart-alt-2'></i></span> Reportes
+            </a>
+            <a href="#" onclick="showView('cart'); toggleMenu();">
+                <span class="menu-icon"><i class='bx bx-cart'></i></span> Carrito <span id="cart-count" class="cart-badge">0</span>
+            </a>
+            <div class="menu-footer">
+                <button class="btn btn-secondary btn-small logout-menu-btn" onclick="logout()">
+                    <span class="menu-icon"><i class='bx bx-log-out'></i></span> Cerrar Sesión
+                </button>
+            </div>
         </div>
 
-        <!-- VISTA: DASHBOARD -->
+        <!-- VISTA: DASHBOARD PRINCIPAL -->
         <div id="dashboard-view" class="view active">
             <h1 class="section-title">Dashboard</h1>
-            
+
+            <!-- Grid de estadísticas principales -->
             <div class="stats-grid">
+                <!-- Estadística: Total de artículos en inventario -->
                 <div class="stat-card">
                     <h3>Total Artículos</h3>
                     <div class="stat-value" id="total-items">0</div>
                 </div>
+                <!-- Estadística: Artículos disponibles -->
                 <div class="stat-card">
                     <h3>Disponibles</h3>
                     <div class="stat-value" id="available-items">0</div>
                 </div>
+                <!-- Estadística: Tickets abiertos -->
                 <div class="stat-card">
                     <h3>Tickets Abiertos</h3>
                     <div class="stat-value" id="open-tickets">0</div>
                 </div>
+                <!-- Estadística: Total de tickets -->
                 <div class="stat-card">
                     <h3>Total Tickets</h3>
                     <div class="stat-value" id="total-tickets">0</div>
@@ -60,28 +103,34 @@
             </div>
         </div>
 
-        <!-- VISTA: INVENTARIO -->
+        <!-- VISTA: GESTIÓN DE INVENTARIO -->
         <div id="inventory-view" class="view">
             <h1 class="section-title">Gestión de Inventario</h1>
-            
+
+            <!-- Contenedor de la tabla de inventario -->
             <div class="card">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
                     <h2 style="font-family: 'Rajdhani', sans-serif; font-size: 1.5rem; color: var(--text-light);">Artículos</h2>
+                    <!-- Botón para agregar nuevo artículo (solo para admin) -->
                     <button class="btn btn-primary" onclick="openInventoryModal()">+ Nuevo Artículo</button>
                 </div>
-                
+
+                <!-- Tabla de inventario con scroll horizontal -->
                 <div style="overflow-x: auto;">
                     <table id="inventory-table">
                         <thead>
                             <tr>
+                                <th>Imagen</th>
                                 <th>Código</th>
                                 <th>Nombre</th>
                                 <th>Categoría</th>
+                                <th>Precio</th>
                                 <th>Cantidad</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
+                        <!-- Cuerpo de la tabla donde se renderizan los artículos dinámicamente -->
                         <tbody id="inventory-tbody">
                             <!-- Datos dinámicos -->
                         </tbody>
@@ -90,13 +139,15 @@
             </div>
         </div>
 
-        <!-- VISTA: TICKETS -->
+        <!-- VISTA: SISTEMA DE TICKETS -->
         <div id="tickets-view" class="view">
             <h1 class="section-title">Sistema de Tickets</h1>
-            
+
+            <!-- Contenedor de la tabla de tickets -->
             <div class="card">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
                     <h2 style="font-family: 'Rajdhani', sans-serif; font-size: 1.5rem; color: var(--text-light);">Tickets</h2>
+                    <!-- Botón para crear nuevo ticket (solo para admin) -->
                     <button class="btn btn-primary" onclick="openTicketModal()">+ Nuevo Ticket</button>
                 </div>
                 
@@ -107,6 +158,7 @@
                                 <th>ID</th>
                                 <th>Título</th>
                                 <th>Solicitante</th>
+                                <th>Implementos</th>
                                 <th>Estado</th>
                                 <th>Fecha</th>
                                 <th>Acciones</th>
@@ -146,6 +198,42 @@
             <div class="card">
                 <h2 style="font-family: 'Rajdhani', sans-serif; font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-light);">Actividad Reciente</h2>
                 <p style="color: var(--text-muted);">Los reportes detallados estarán disponibles próximamente.</p>
+            </div>
+        </div>
+
+        <!-- VISTA: CARRITO -->
+        <div id="cart-view" class="view">
+            <h1 class="section-title">Carrito de Implementos</h1>
+
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2 style="font-family: 'Rajdhani', sans-serif; font-size: 1.5rem; color: var(--text-light);">Implementos Seleccionados</h2>
+                    <button class="btn btn-primary" id="checkout-btn" onclick="checkoutCart()">Confirmar Préstamo</button>
+                </div>
+                
+                <div style="overflow-x: auto;">
+                    <table id="cart-table">
+                        <thead>
+                            <tr>
+                                <th>Imagen</th>
+                                <th>Código</th>
+                                <th>Nombre</th>
+                                <th>Cantidad</th>
+                                <th>Precio</th>
+                                <th>Subtotal</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cart-tbody">
+                            <!-- Datos del carrito dinámicos -->
+                        </tbody>
+                    </table>
+                    <div class="cart-summary">
+                        <span>Total general:</span>
+                        <strong id="cart-total">$ 0</strong>
+                    </div>
+                    <p id="empty-cart-msg" style="text-align: center; color: var(--text-muted); margin-top: 1rem; display: none;">El carrito está vacío</p>
+                </div>
             </div>
         </div>
     </div>
@@ -189,6 +277,25 @@
                         <input type="number" id="item-quantity" min="0" required>
                     </div>
                 </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Precio</label>
+                        <input type="number" id="item-price" min="0" step="0.01" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Imagen (archivo)</label>
+                        <input type="file" id="item-image-file" accept="image/*">
+                    </div>
+                    <div class="form-group">
+                        <label>Imagen (URL)</label>
+                        <input type="url" id="item-image-url" placeholder="https://...">
+                    </div>
+                </div>
+                <p class="form-hint">Si eliges archivo se usa en lugar de URL.</p>
                 
                 <div class="form-group">
                     <label>Descripción</label>
@@ -203,7 +310,7 @@
         </div>
     </div>
 
-    <!-- MODAL TICKETS -->
+    <!-- MODAL PARA GESTIÓN DE TICKETS -->
     <div id="ticket-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -211,14 +318,18 @@
                 <button class="close-modal" onclick="closeTicketModal()">&times;</button>
             </div>
             
+            <!-- Formulario para crear/editar tickets -->
             <form id="ticket-form">
+                <!-- Campo oculto para ID del ticket (para ediciones) -->
                 <input type="hidden" id="ticket-id">
                 
+                <!-- Campo de título del ticket -->
                 <div class="form-group">
                     <label>Título</label>
                     <input type="text" id="ticket-title" required>
                 </div>
                 
+                <!-- Fila de campos: solicitante y estado -->
                 <div class="form-row">
                     <div class="form-group">
                         <label>Solicitante</label>
@@ -234,11 +345,13 @@
                     </div>
                 </div>
                 
+                <!-- Campo de descripción del ticket -->
                 <div class="form-group">
                     <label>Descripción</label>
                     <textarea id="ticket-description" rows="4" required></textarea>
                 </div>
                 
+                <!-- Botones de acción del modal -->
                 <div class="actions">
                     <button type="submit" class="btn btn-primary">Guardar</button>
                     <button type="button" class="btn btn-secondary" onclick="closeTicketModal()">Cancelar</button>
@@ -246,16 +359,19 @@
             </form>
         </div>
     </div>
-    
 
+    <!-- Script principal que maneja toda la lógica del dashboard -->
     <script src="app.js"></script>
 
+    <!-- Script adicional para funcionalidad específica del dashboard -->
     <script>
+        // Función para alternar el menú móvil
         function toggleMenu() {
             document.getElementById('mobile-menu').classList.toggle('active');
         }
     </script>
 
+    <!-- Pie de página -->
     <footer class="footer">
         <p>&copy; 2026 Estiven Castro. Todos los derechos reservados.</p>
     </footer>

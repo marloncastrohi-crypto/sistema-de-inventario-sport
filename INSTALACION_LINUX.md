@@ -85,6 +85,7 @@ CREATE TABLE inventory (
     code VARCHAR(20) UNIQUE NOT NULL,
     name VARCHAR(100) NOT NULL,
     category VARCHAR(50) NOT NULL,
+    price DECIMAL(12, 2) DEFAULT 0,
     quantity INT DEFAULT 0,
     description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -111,10 +112,10 @@ INSERT INTO users (username, email, password, name, role) VALUES
 ('usuario', 'usuario@sportstock.com', '123456', 'Usuario', 'usuario');
 
 -- Insertar datos de ejemplo en inventario
-INSERT INTO inventory (code, name, category, quantity, description) VALUES
-('BF-001', 'Balón de Fútbol', 'Fútbol', 15, 'Balón profesional Nike'),
-('BB-012', 'Balón de Basketball', 'Basketball', 20, 'Balón Spalding oficial'),
-('RT-003', 'Raqueta de Tenis', 'Tenis', 8, 'Raqueta Wilson Pro Staff');
+INSERT INTO inventory (code, name, category, price, quantity, description) VALUES
+('BF-001', 'Balón de Fútbol', 'Fútbol', 85000, 15, 'Balón profesional Nike'),
+('BB-012', 'Balón de Basketball', 'Basketball', 92000, 20, 'Balón Spalding oficial'),
+('RT-003', 'Raqueta de Tenis', 'Tenis', 180000, 8, 'Raqueta Wilson Pro Staff');
 
 -- Insertar tickets de ejemplo
 INSERT INTO tickets (title, requester, status, description) VALUES
@@ -140,6 +141,25 @@ sudo cp app.js /var/www/sportstock/
 sudo chown -R www-data:www-data /var/www/sportstock
 sudo chmod -R 755 /var/www/sportstock
 ```
+
+## ⚙️ Backend Spring Boot (Java 23)
+
+### 9. Configurar variables del backend
+Editar el archivo:
+`backend/src/main/resources/application.yml`
+
+Valores clave:
+- `spring.datasource.username`
+- `spring.datasource.password`
+
+### 10. Ejecutar API
+```bash
+cd /ruta/al/proyecto/backend
+mvn spring-boot:run
+```
+
+### Nota sobre usuarios
+El backend usa contrasenas hasheadas (bcrypt). Si quieres crear usuarios iniciales en MySQL, debes almacenar el hash generado. Alternativamente, crea usuarios usando el endpoint `POST /api/auth/register`.
 
 ### 6. Configurar Apache Virtual Host
 

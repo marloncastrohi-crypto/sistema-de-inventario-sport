@@ -49,6 +49,7 @@
 1. **index.html** - Página de inicio y autenticación
 2. **dashboard.html** - Panel principal del sistema
 3. **app.js** - Lógica JavaScript con CRUD completo y sistema de roles
+4. **backend/** - API Spring Boot Java 23 (MVC + MySQL)
 
 ### Documentación
 4. **README.md** - Documentación completa del proyecto
@@ -109,6 +110,7 @@
 ### Sistema de Autenticación y Roles
 - [x] Login con validación
 - [x] Registro de usuarios
+- [x] Auto-login después del registro
 - [x] Recuperación de contraseña
 - [x] Gestión de sesiones
 - [x] Sistema de roles: Admin y Usuario
@@ -123,6 +125,7 @@
 - [x] Ver detalles del artículo *(Usuario)*
 - [x] Categorización
 - [x] Control de stock
+- [x] Campo de precio en artículos (COP)
 
 ### CRUD de Tickets
 - [x] Crear tickets *(Admin)*
@@ -132,12 +135,22 @@
 - [x] Ver detalles del ticket *(Usuario)*
 - [x] Estados: Abierto, En Proceso, Cerrado
 
+### Carrito de Implementos
+- [x] Agregar artículos desde inventario
+- [x] Ajustar cantidades con validación de stock
+- [x] Subtotal por artículo y total general
+- [x] Generación de ticket desde carrito con solicitante del usuario
+
 ### Dashboard
 - [x] Estadísticas en tiempo real
 - [x] Total de artículos
 - [x] Artículos disponibles
 - [x] Tickets abiertos
 - [x] Métricas visuales
+
+### UI/UX
+- [x] Menú hamburguesa mejorado con iconografía profesional
+- [x] Iconos Boxicons en navegación
 
 ---
 
@@ -202,6 +215,8 @@ Script completo en `INSTALACION_LINUX.md`
 | CSS3 | Diseño y animaciones |
 | JavaScript ES6+ | Lógica CRUD + Roles |
 | LocalStorage | Persistencia temporal |
+| Java 23 | Backend API |
+| Spring Boot MVC | Seguridad y controladores |
 | MySQL | Base de datos |
 | Apache2 | Servidor web |
 
