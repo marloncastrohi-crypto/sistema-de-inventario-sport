@@ -624,6 +624,180 @@ body::before {
     text-transform: uppercase;
 }
 
+/* =========================================
+   REPORTES Y ESTADISTICAS
+   ========================================= */
+.report-kpis .stat-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.report-kpi-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.6rem;
+}
+
+.report-kpi-icon {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: rgba(0, 217, 255, 0.15);
+    border: 1px solid rgba(0, 217, 255, 0.35);
+    color: var(--accent);
+    font-size: 1.2rem;
+    box-shadow: 0 6px 18px rgba(0, 217, 255, 0.18);
+}
+
+.report-kpi-foot {
+    margin-top: 0.4rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.report-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    align-items: stretch;
+}
+
+.report-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.report-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right, rgba(0, 217, 255, 0.08), transparent 55%);
+    pointer-events: none;
+}
+
+.report-card-header {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.report-card-header h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.4rem;
+    color: var(--text-light);
+}
+
+.report-subtitle {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+}
+
+.report-card-wide {
+    grid-column: 1 / -1;
+}
+
+.bar-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    position: relative;
+    z-index: 1;
+}
+
+.bar-row {
+    display: grid;
+    grid-template-columns: minmax(90px, 120px) 1fr minmax(48px, 70px);
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.bar-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.bar-track {
+    height: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.bar-fill {
+    display: block;
+    height: 100%;
+    width: 0;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    box-shadow: 0 0 14px rgba(0, 217, 255, 0.25);
+    transition: width 0.6s ease;
+}
+
+.bar-fill-info {
+    background: linear-gradient(90deg, #00d9ff, #4facfe);
+}
+
+.bar-fill-warning {
+    background: linear-gradient(90deg, #ffd600, #ff9f1c);
+}
+
+.bar-fill-success {
+    background: linear-gradient(90deg, #00e676, #00c853);
+}
+
+.bar-value {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    text-align: right;
+    color: var(--text-light);
+}
+
+.report-metric-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1.2rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+}
+
+.report-metric-line strong {
+    color: var(--text-light);
+    font-size: 1.1rem;
+}
+
+.report-empty {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.report-note {
+    position: relative;
+}
+
 .menu-footer {
     margin-top: auto;
     padding-top: 1rem;

@@ -176,28 +176,75 @@
         <div id="reports-view" class="view">
             <h1 class="section-title">Reportes y Estadísticas</h1>
             
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h3>Préstamos del Mes</h3>
-                    <div class="stat-value">24</div>
+            <div class="stats-grid report-kpis">
+                <div class="stat-card report-kpi">
+                    <div class="report-kpi-head">
+                        <span class="report-kpi-icon"><i class='bx bx-calendar-check'></i></span>
+                        <h3>Préstamos del Mes</h3>
+                    </div>
+                    <div class="stat-value" id="reports-loans-month">0</div>
+                    <div class="report-kpi-foot">Últimos 30 días</div>
                 </div>
-                <div class="stat-card">
-                    <h3>Tickets Resueltos</h3>
-                    <div class="stat-value">18</div>
+                <div class="stat-card report-kpi">
+                    <div class="report-kpi-head">
+                        <span class="report-kpi-icon"><i class='bx bx-check-circle'></i></span>
+                        <h3>Tickets Resueltos</h3>
+                    </div>
+                    <div class="stat-value" id="reports-tickets-resolved">0</div>
+                    <div class="report-kpi-foot">Estado cerrado</div>
                 </div>
-                <div class="stat-card">
-                    <h3>Artículos Más Solicitados</h3>
-                    <div class="stat-value">Balones</div>
+                <div class="stat-card report-kpi">
+                    <div class="report-kpi-head">
+                        <span class="report-kpi-icon"><i class='bx bx-basketball'></i></span>
+                        <h3>Artículo Más Solicitado</h3>
+                    </div>
+                    <div class="stat-value" id="reports-top-item">Sin datos</div>
+                    <div class="report-kpi-foot">Basado en préstamos</div>
                 </div>
-                <div class="stat-card">
-                    <h3>Tasa de Resolución</h3>
-                    <div class="stat-value">87%</div>
+                <div class="stat-card report-kpi">
+                    <div class="report-kpi-head">
+                        <span class="report-kpi-icon"><i class='bx bx-line-chart'></i></span>
+                        <h3>Tasa de Resolución</h3>
+                    </div>
+                    <div class="stat-value" id="reports-resolution-rate">0%</div>
+                    <div class="report-kpi-foot">Tickets cerrados</div>
                 </div>
             </div>
 
-            <div class="card">
-                <h2 style="font-family: 'Rajdhani', sans-serif; font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-light);">Actividad Reciente</h2>
-                <p style="color: var(--text-muted);">Los reportes detallados estarán disponibles próximamente.</p>
+            <div class="report-grid">
+                <div class="card report-card">
+                    <div class="report-card-header">
+                        <h2>Préstamos últimos 6 meses</h2>
+                        <span class="report-subtitle">Total por mes</span>
+                    </div>
+                    <div class="bar-chart" id="loan-month-chart">
+                        <p class="report-empty">Cargando datos...</p>
+                    </div>
+                </div>
+
+                <div class="card report-card">
+                    <div class="report-card-header">
+                        <h2>Estado de Tickets</h2>
+                        <span class="report-subtitle">Distribución actual</span>
+                    </div>
+                    <div class="bar-chart" id="ticket-status-chart">
+                        <p class="report-empty">Cargando datos...</p>
+                    </div>
+                    <div class="report-metric-line">
+                        <span>Tasa de resolución</span>
+                        <strong id="reports-resolution-rate-detail">0%</strong>
+                    </div>
+                </div>
+
+                <div class="card report-card">
+                    <div class="report-card-header">
+                        <h2>Top implementos solicitados</h2>
+                        <span class="report-subtitle">Top 3 por cantidad</span>
+                    </div>
+                    <div class="bar-chart" id="top-items-chart">
+                        <p class="report-empty">Cargando datos...</p>
+                    </div>
+                </div>
             </div>
         </div>
 

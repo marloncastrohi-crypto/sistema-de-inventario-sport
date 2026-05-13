@@ -52,6 +52,60 @@ function getItemNamesFromTicket(description) {
         .filter(Boolean);
 }
 
+function parseTicketDate(ticket) {
+    if (!ticket) return null;
+    const raw = ticket.date || ticket.createdAt || ticket.updatedAt;
+    if (!raw) return null;
+    const rawText = String(raw);
+    const isoText = rawText.includes('T') ? rawText : `${rawText}T00:00:00`;
+    const parsed = new Date(isoText);
+    if (Number.isNaN(parsed.getTime())) return null;
+    return parsed;
+}
+
+function isLoanTicket(ticket) {
+    const title = normalizeKey(ticket && ticket.title ? ticket.title : '');
+    const description = normalizeKey(ticket && ticket.description ? ticket.description : '');
+    return title.includes('prestamo') || description.startsWith('prestamo de implementos');
+}
+
+function getTopRequestedItems(loanTickets, limit = 3) {
+    const totals = new Map();
+    const names = new Map();
+
+    loanTickets.forEach(ticket => {
+        if (!ticket || !ticket.description) return;
+        ticket.description.split('\n').forEach(line => {
+            const match = line.match(/-\s*(\d+)\s*x\s*(.+?)\s*=/i);
+            if (!match) return;
+            const qty = Number(match[1]) || 0;
+            const name = match[2].trim();
+            if (!name || qty <= 0) return;
+            const key = normalizeKey(name);
+            totals.set(key, (totals.get(key) || 0) + qty);
+            if (!names.has(key)) {
+                names.set(key, name);
+            }
+        });
+    });
+
+    const sorted = Array.from(totals.entries())
+        .map(([key, qty]) => ({
+            key,
+            qty,
+            name: names.get(key) || key
+        }))
+        .sort((a, b) => b.qty - a.qty)
+        .slice(0, limit);
+
+    return sorted;
+}
+
+function formatShortMonth(date) {
+    const raw = date.toLocaleString('es-CO', { month: 'short' });
+    return raw.replace('.', '').toUpperCase();
+}
+
 let selectedImageData = '';
 
 function setImageInputs(imageUrl) {
@@ -410,6 +464,9 @@ function showView(viewName, event) {
     if(viewName === 'cart') {
         renderCart();
     }
+    if (viewName === 'reports') {
+        updateReportStats();
+    }
 
     // Actualizar pestañas activas (si existieran)
     document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -433,7 +490,143 @@ function updateStats() {
     document.getElementById('available-items').textContent = availableItems;
     document.getElementById('open-tickets').textContent = openTickets;
     document.getElementById('total-tickets').textContent = totalTickets;
+
+    updateReportStats();
 }
+
+function updateReportStats() {
+    const reportView = document.getElementById('reports-view');
+    if (!reportView) return;
+
+    const loanTickets = tickets.filter(isLoanTicket);
+    const now = new Date();
+    const loansThisMonth = loanTickets.filter(ticket => {
+        const date = parseTicketDate(ticket);
+        if (!date) return false;
+        return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear();
+    }).length;
+
+    let openCount = 0;
+    let inProgressCount = 0;
+    let closedCount = 0;
+    tickets.forEach(ticket => {
+        const status = normalizeKey(ticket.status);
+        if (status === 'abierto') openCount += 1;
+        else if (status === 'en proceso' || status === 'enproceso') inProgressCount += 1;
+        else if (status === 'cerrado') closedCount += 1;
+    });
+
+    const totalTickets = tickets.length;
+    const resolutionRate = totalTickets > 0
+        ? Math.round((closedCount / totalTickets) * 100)
+        : 0;
+
+    const topItems = getTopRequestedItems(loanTickets, 3);
+    const topItemName = topItems.length > 0 ? topItems[0].name : 'Sin datos';
+
+    const loansEl = document.getElementById('reports-loans-month');
+    const resolvedEl = document.getElementById('reports-tickets-resolved');
+    const topItemEl = document.getElementById('reports-top-item');
+    const resolutionEl = document.getElementById('reports-resolution-rate');
+    const resolutionDetailEl = document.getElementById('reports-resolution-rate-detail');
+
+    if (loansEl) loansEl.textContent = loansThisMonth;
+    if (resolvedEl) resolvedEl.textContent = closedCount;
+    if (topItemEl) topItemEl.textContent = topItemName;
+    if (resolutionEl) resolutionEl.textContent = `${resolutionRate}%`;
+    if (resolutionDetailEl) resolutionDetailEl.textContent = `${resolutionRate}%`;
+
+    const loanMonthChart = document.getElementById('loan-month-chart');
+    if (loanMonthChart) {
+        const monthsToShow = 6;
+        const monthMap = new Map();
+        for (let i = 0; i < monthsToShow; i += 1) {
+            const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+            const key = `${date.getFullYear()}-${date.getMonth()}`;
+            monthMap.set(key, { date, count: 0 });
+        }
+
+        loanTickets.forEach(ticket => {
+            const date = parseTicketDate(ticket);
+            if (!date) return;
+            const key = `${date.getFullYear()}-${date.getMonth()}`;
+            const entry = monthMap.get(key);
+            if (entry) {
+                entry.count += 1;
+            }
+        });
+
+        const monthData = Array.from(monthMap.values()).sort((a, b) => a.date - b.date);
+        const maxCount = monthData.reduce((max, entry) => Math.max(max, entry.count), 0);
+        if (monthData.length === 0) {
+            loanMonthChart.innerHTML = '<p class="report-empty">Sin datos disponibles.</p>';
+        } else {
+            loanMonthChart.innerHTML = monthData.map(entry => {
+                const width = maxCount > 0
+                    ? Math.max(6, Math.round((entry.count / maxCount) * 100))
+                    : 0;
+                const label = formatShortMonth(entry.date);
+                return `
+                    <div class="bar-row">
+                        <span class="bar-label">${label}</span>
+                        <div class="bar-track">
+                            <span class="bar-fill" style="width: ${width}%;"></span>
+                        </div>
+                        <span class="bar-value">${entry.count}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+    }
+
+    const ticketStatusChart = document.getElementById('ticket-status-chart');
+    if (ticketStatusChart) {
+        const statusTotal = openCount + inProgressCount + closedCount;
+        const statusRows = [
+            { label: 'Abiertos', count: openCount, variant: 'bar-fill-info' },
+            { label: 'En Proceso', count: inProgressCount, variant: 'bar-fill-warning' },
+            { label: 'Cerrados', count: closedCount, variant: 'bar-fill-success' }
+        ];
+        ticketStatusChart.innerHTML = statusRows.map(row => {
+            const width = statusTotal > 0
+                ? Math.max(6, Math.round((row.count / statusTotal) * 100))
+                : 0;
+            return `
+                <div class="bar-row">
+                    <span class="bar-label">${row.label}</span>
+                    <div class="bar-track">
+                        <span class="bar-fill ${row.variant}" style="width: ${width}%;"></span>
+                    </div>
+                    <span class="bar-value">${row.count}</span>
+                </div>
+            `;
+        }).join('');
+    }
+
+    const topItemsChart = document.getElementById('top-items-chart');
+    if (topItemsChart) {
+        if (topItems.length === 0) {
+            topItemsChart.innerHTML = '<p class="report-empty">Sin datos disponibles.</p>';
+        } else {
+            const maxQty = topItems.reduce((max, item) => Math.max(max, item.qty), 0);
+            topItemsChart.innerHTML = topItems.map(item => {
+                const width = maxQty > 0
+                    ? Math.max(6, Math.round((item.qty / maxQty) * 100))
+                    : 0;
+                return `
+                    <div class="bar-row">
+                        <span class="bar-label">${item.name}</span>
+                        <div class="bar-track">
+                            <span class="bar-fill" style="width: ${width}%;"></span>
+                        </div>
+                        <span class="bar-value">${item.qty} uds</span>
+                    </div>
+                `;
+            }).join('');
+        }
+    }
+}
+
 
 // =====================================================
 // GESTIÓN DE INVENTARIO - CRUD
@@ -482,8 +675,10 @@ function renderInventory() {
                 <td>${formatPrice(item.price)}</td>
                 <td>${item.quantity}</td>
                 <td><span class="status-badge ${statusClass}">${statusText}</span></td>
-                <td class="actions">
-                    ${actionsHTML}
+                <td>
+                    <div class="actions">
+                        ${actionsHTML}
+                    </div>
                 </td>
             </tr>
         `;
@@ -645,8 +840,10 @@ function renderTickets() {
                 <td><div class="ticket-images">${imageHtml}</div></td>
                 <td><span class="status-badge ${statusClass}">${ticket.status}</span></td>
                 <td>${ticket.date}</td>
-                <td class="actions">
-                    ${actionsHTML}
+                <td>
+                    <div class="actions">
+                        ${actionsHTML}
+                    </div>
                 </td>
             </tr>
         `;
