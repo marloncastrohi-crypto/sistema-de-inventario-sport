@@ -3,6 +3,7 @@ package com.sportstock.web;
 import com.sportstock.model.Ticket;
 import com.sportstock.service.TicketService;
 import com.sportstock.web.dto.TicketRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,17 +30,20 @@ public class TicketController {
     }
 
     @PostMapping
-    public Ticket create(@Valid @RequestBody TicketRequest request) {
+    public Ticket create(@Valid @RequestBody TicketRequest request, HttpServletRequest httpRequest) {
+        RoleGuard.requireAdmin(httpRequest);
         return ticketService.create(request);
     }
 
     @PutMapping("/{id}")
-    public Ticket update(@PathVariable Long id, @Valid @RequestBody TicketRequest request) {
+    public Ticket update(@PathVariable Long id, @Valid @RequestBody TicketRequest request, HttpServletRequest httpRequest) {
+        RoleGuard.requireAdmin(httpRequest);
         return ticketService.update(id, request);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable Long id, HttpServletRequest httpRequest) {
+        RoleGuard.requireAdmin(httpRequest);
         ticketService.delete(id);
     }
 }

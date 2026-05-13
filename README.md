@@ -32,6 +32,7 @@ Campos del inventario:
 - Precio (COP)
 - Cantidad disponible
 - Descripción
+- Imagen (archivo o URL)
 
 ### 🎫 Sistema de Tickets (CRUD)
 - ✅ **Crear**: Generar nuevos tickets de solicitud *(solo Admin)*
@@ -137,6 +138,12 @@ mvn spring-boot:run
 - `PUT /api/tickets/{id}` (admin)
 - `DELETE /api/tickets/{id}` (admin)
 - `POST /api/cart/checkout`
+
+### Roles y permisos (resumen)
+- Frontend oculta o muestra acciones según el rol.
+- Backend valida el rol mediante el header `X-User-Role` para acciones de escritura:
+  - Inventario: crear, editar, eliminar (solo admin)
+  - Tickets: crear, editar, eliminar (solo admin)
 
 ## 💻 Tecnologías Utilizadas
 

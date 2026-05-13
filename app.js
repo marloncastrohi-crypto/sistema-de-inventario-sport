@@ -157,8 +157,12 @@ if (imageUrlInput) {
 }
 
 async function fetchJson(url, options = {}) {
+    const storedUser = localStorage.getItem('currentUser');
+    const currentUserData = storedUser ? JSON.parse(storedUser) : null;
     const headers = {
         'Content-Type': 'application/json',
+        'X-User-Role': currentUserData?.role || '',
+        'X-User-Name': currentUserData?.username || '',
         ...(options.headers || {})
     };
 
@@ -374,12 +378,14 @@ function logout() {
 // ============ VERIFICAR PERMISOS ============
 // Función para verificar si el usuario es administrador
 function isAdmin() {
-    return currentUser && currentUser.role === 'admin';
+    const role = currentUser?.role ? String(currentUser.role).toLowerCase() : '';
+    return role === 'admin' || role === 'administrador';
 }
 
 // Función para verificar si el usuario es regular
 function isUsuario() {
-    return currentUser && currentUser.role === 'usuario';
+    const role = currentUser?.role ? String(currentUser.role).toLowerCase() : '';
+    return role === 'usuario';
 }
 
 // ============ APLICAR RESTRICCIONES POR ROL ============
@@ -392,6 +398,14 @@ function applyRoleRestrictions() {
         // Ocultar botones de nuevo artículo en tabla
         const addItemsBtn = document.querySelectorAll('button[onclick="openInventoryModal()"]');
         addItemsBtn.forEach(btn => btn.style.display = 'none');
+
+        // Ocultar botón de nuevo ticket
+        const addTicketsBtn = document.querySelectorAll('button[onclick="openTicketModal()"]');
+        addTicketsBtn.forEach(btn => btn.style.display = 'none');
+
+        // Ocultar acceso a reportes
+        const reportLinks = document.querySelectorAll('a[onclick*="showView(\'reports\')"]');
+        reportLinks.forEach(link => link.style.display = 'none');
 
         // Los botones de editar/eliminar se ocultarán en renderInventory()
     }
@@ -413,6 +427,10 @@ async function loadInventory() {
 
 async function loadTickets() {
     tickets = await fetchJson(`${API_URL}/tickets`);
+    if (isUsuario()) {
+        const requester = (currentUser?.name || currentUser?.username || '').toLowerCase();
+        tickets = tickets.filter(ticket => String(ticket.requester || '').toLowerCase() === requester);
+    }
     renderTickets();
 }
 
@@ -452,6 +470,11 @@ function formatPrice(value) {
 // ============ NAVEGACIÓN ============
 // Función para cambiar entre vistas del dashboard
 function showView(viewName, event) {
+    if (viewName === 'reports' && isUsuario()) {
+        alert('Sección disponible solo para administradores.');
+        return;
+    }
+
     // Ocultar todas las vistas
     document.querySelectorAll('.view').forEach(view => {
         view.classList.remove('active');

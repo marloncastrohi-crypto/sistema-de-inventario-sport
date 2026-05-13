@@ -3,6 +3,7 @@ package com.sportstock.web;
 import com.sportstock.model.InventoryItem;
 import com.sportstock.service.InventoryService;
 import com.sportstock.web.dto.InventoryRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,17 +30,20 @@ public class InventoryController {
     }
 
     @PostMapping
-    public InventoryItem create(@Valid @RequestBody InventoryRequest request) {
+    public InventoryItem create(@Valid @RequestBody InventoryRequest request, HttpServletRequest httpRequest) {
+        RoleGuard.requireAdmin(httpRequest);
         return inventoryService.create(request);
     }
 
     @PutMapping("/{id}")
-    public InventoryItem update(@PathVariable Long id, @Valid @RequestBody InventoryRequest request) {
+    public InventoryItem update(@PathVariable Long id, @Valid @RequestBody InventoryRequest request, HttpServletRequest httpRequest) {
+        RoleGuard.requireAdmin(httpRequest);
         return inventoryService.update(id, request);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable Long id, HttpServletRequest httpRequest) {
+        RoleGuard.requireAdmin(httpRequest);
         inventoryService.delete(id);
     }
 }
