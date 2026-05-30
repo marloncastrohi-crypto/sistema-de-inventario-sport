@@ -141,7 +141,9 @@ if (imageFileInput) {
                 imageUrlInput.value = '';
             }
         };
-        reader.readAsDataURL(file);
+        const urlBase64 = reader.readAsDataURL(file);
+        console.log(urlBase64);
+        console.log(imageUrlInput.value);
     });
 }
 
@@ -182,7 +184,9 @@ async function fetchJson(url, options = {}) {
         return null;
     }
 
-    return response.json();
+    if(options.method !== "DELETE") {
+        return response.json();
+    }
 }
 
 // ============ VERIFICAR SESIÓN ============
@@ -811,6 +815,7 @@ async function deleteItem(id) {
             await loadInventory();
             updateStats();
         } catch (error) {
+            console.log(error)
             alert('No se pudo eliminar el artículo.');
         }
     }
